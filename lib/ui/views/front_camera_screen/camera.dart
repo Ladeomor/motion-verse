@@ -34,12 +34,6 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return loading? const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-
-        ),
-      ),
-    ):FrontCamera();
+    return FrontCamera();
   }
 }

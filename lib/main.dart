@@ -1,9 +1,22 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
 import 'package:montion_verse/ui/views/splash_screen/splash_screen.dart';
 import 'package:montion_verse/view_models/provider/font_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async{
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
+
+  try{
+    cameras = await availableCameras();
+
+  }on CameraException catch (e){
+    print('Error in fetching the cameras: $e');
+
+  }
   runApp(MultiProvider(
       providers: [
 
