@@ -76,7 +76,7 @@ class Classifier {
       _labels =
           labels ?? await FileUtil.loadLabels("assets/" + LABEL_FILE_NAME);
     } catch (e) {
-      print("Error while loading labels: $e");
+      print("Error while loading label: $e");
     }
   }
 
