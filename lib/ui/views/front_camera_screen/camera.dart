@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
 
 class Camera extends StatefulWidget {
@@ -11,6 +12,7 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
+
   bool loading = true;
   @override
   void initState() {
@@ -36,4 +38,6 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return FrontCamera();
   }
+
+
 }

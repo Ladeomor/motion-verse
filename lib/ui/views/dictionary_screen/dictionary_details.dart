@@ -8,13 +8,12 @@ import 'package:montion_verse/view_models/provider/font_provider.dart';
 import 'package:provider/provider.dart';
 
 class DictionaryDetails extends StatelessWidget {
-  final DictionaryModel dm;
+  final SignLanguage signLanguage;
 
-  const DictionaryDetails({Key? key, required this.dm}) : super(key: key);
+  const DictionaryDetails({Key? key, required this.signLanguage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<DictionaryModel> dictonary = dictionaryModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -35,11 +34,11 @@ class DictionaryDetails extends StatelessWidget {
               padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               child: Column(
                 children: [
-                  Image.asset(dm.signLanguageImage),
+                  Image.network(signLanguage.signLanguageImage.toString()),
                   SizedBox(height: 20,),
 
                   Align(alignment: Alignment.centerLeft,
-                      child: Text(dm.signLanguage, style: GoogleFonts.poppins(
+                      child: Text("Sign Language ${signLanguage.signLanguage}", style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,),)),
@@ -48,7 +47,7 @@ class DictionaryDetails extends StatelessWidget {
                     constraints: BoxConstraints(
                       minWidth: 70
                     ),
-                    child: Text(dm.signLanguageTranslation, style: GoogleFonts.poppins(
+                    child: Text(signLanguage.signLanguageTranslation, style: GoogleFonts.poppins(
                         color: Colors.white, fontSize: fontProvider.currFontSize),),
                   )
 

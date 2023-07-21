@@ -7,6 +7,7 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
   final void Function(String)? onSubmitted;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -21,6 +22,7 @@ class AppTextField extends StatelessWidget {
         this.focusNode,
         this.textInputAction,
         this.onSubmitted,
+        this.onChanged,
         this.validator,
         this.prefixIcon,
         this.suffixIcon,
@@ -49,6 +51,7 @@ class AppTextField extends StatelessWidget {
               focusNode: focusNode,
               textInputAction: textInputAction,
               validator: validator,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),

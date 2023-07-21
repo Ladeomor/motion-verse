@@ -1,5 +1,5 @@
-class DictionaryModel{
-  DictionaryModel({
+class SignLanguage{
+  SignLanguage({
     required this.signLanguage,
     required this.signLanguageTranslation,
     required this.signLanguageImage,

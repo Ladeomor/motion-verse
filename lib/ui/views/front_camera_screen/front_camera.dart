@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/bounding_box.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
 List<CameraDescription>? cameras;
 
@@ -19,26 +25,91 @@ class _FrontCameraState extends State<FrontCamera> {
   Future<void>? cameraValue;
   bool flash = false;
   bool isFrontCamera = true;
-  double transform = 0;
+  var cameraCount = 0;
   bool isRecording = false;
+  double transform = 0;
+  bool isDetecting = false;
+
+
+  bool isCameraInitialized = false;
+
   @override
   void initState() {
     super.initState();
-    _cameraController = CameraController(cameras![0], ResolutionPreset.high);
+    initializeCamera();
+    initTflite();
+  }
 
-    cameraValue= _cameraController!.initialize();
+
+
+  void initializeCamera(){
+    _cameraController = CameraController(cameras![0], ResolutionPreset.high);
+    cameraValue= _cameraController!.initialize().then((value) {
+      _cameraController!.startImageStream((image) {
+        cameraCount++;
+        isDetecting = true;
+
+        if(cameraCount % 10 == 0){
+          cameraCount = 0;
+          objectDetector(image);
+
+        }
+      });
+
+
+    });
+
+    if(!mounted)return;
+    setState(() {
+      isCameraInitialized = true;
+    });
+  }
+  initTflite()async{
+    await Tflite.loadModel(
+        model: "assets/model_unquant.tflite",
+        labels: "assets/labels.txt",
+        isAsset: true,
+        numThreads: 1,
+        useGpuDelegate: false
+
+    );
+  }
+  objectDetector(CameraImage image) async{
+
+    var detector = await Tflite.runModelOnFrame(
+        bytesList: image.planes.map((e) {
+          return e.bytes;
+        }).toList(),
+        asynch: true,
+        imageHeight: image.height,
+        imageWidth: image.width,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        numResults: 1,
+        rotation: 90,
+        threshold: 0.4
+    );
+    if(detector != null){
+
+      print('Result is $detector');
+
+    }
 
   }
+
+
 
   @override
   void dispose() {
     super.dispose();
-    _cameraController!.dispose();
+    _cameraController?.dispose();
     cameraValue;
   }
 
   @override
   Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -58,6 +129,7 @@ class _FrontCameraState extends State<FrontCamera> {
                   );
                 }
               }),
+
           Positioned(
             bottom: 10.0,
             child: Column(
@@ -114,11 +186,11 @@ class _FrontCameraState extends State<FrontCamera> {
                 ),
                 SizedBox(height: 5),
                 Text('Hold for Video, tap for photo', style: GoogleFonts.poppins(color: Colors.grey, ),textAlign: TextAlign.center,)
-                    ],
-                  ),
-                )
               ],
             ),
+          ),
+        ],
+      ),
     );
   }
   void takePicture(BuildContext context)async{

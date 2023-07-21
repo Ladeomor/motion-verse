@@ -1,12 +1,19 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:montion_verse/models/dictionary_provider.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/live_camera.dart';
 import 'package:montion_verse/ui/views/splash_screen/splash_screen.dart';
 import 'package:montion_verse/view_models/provider/font_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async{
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+ WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp();
+
+ await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   cameras = await availableCameras();
 
@@ -21,6 +28,8 @@ Future<void> main() async{
       providers: [
 
         ChangeNotifierProvider(create: (_) => FontControlProvider()),
+        ChangeNotifierProvider(create: (_) => SignLanguageModel()),
+
 
       ],
 
@@ -38,7 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

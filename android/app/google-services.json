@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "114563311414",
+    "project_id": "motion-verse",
+    "storage_bucket": "motion-verse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114563311414:android:d7e0f9dca279d2fa857597",
+        "android_client_info": {
+          "package_name": "com.example.montion_verse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114563311414-23a6n852ohc0rnooadrcp1cn94e18k05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzZecDljtfyaqYig0SVoOzN6MwIhbHxgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114563311414-23a6n852ohc0rnooadrcp1cn94e18k05.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

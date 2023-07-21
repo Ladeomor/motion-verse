@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montion_verse/data/dictionary_data.dart';
 import 'package:montion_verse/models/dictionary_model.dart';
+import 'package:montion_verse/models/dictionary_provider.dart';
+import 'package:montion_verse/services.dart';
 import 'package:montion_verse/ui/res/components/app_elevated_button.dart';
 import 'package:montion_verse/ui/res/components/app_textffield.dart';
 import 'package:montion_verse/ui/views/dictionary_screen/dictionary_details.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 
-class DictionaryScreen extends StatelessWidget {
+class DictionaryScreen extends StatefulWidget {
   const DictionaryScreen({Key? key}) : super(key: key);
 
   @override
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
+}
+
+class _DictionaryScreenState extends State<DictionaryScreen> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    List<DictionaryModel> dictonary = dictionaryModel;
+    final signLanguageModel = Provider.of<SignLanguageModel>(context);
+    final signLanguageService = SignLanguageService(signLanguageModel);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -26,8 +38,15 @@ class DictionaryScreen extends StatelessWidget {
             )
             ),
             SizedBox(height: 10,),
-            AppTextField(hintText: 'Sign Dictionary', suffixIcon: SearchContainer(),prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: () {
+            AppTextField(
+              controller: searchController,
+              onChanged: (value){
+              signLanguageModel.filterByDictionaryWord(value);
 
+            }, hintText: 'Sign Dictionary', suffixIcon: SearchContainer(onTap:(){
+              signLanguageModel.filterByDictionaryWord(signLanguageModel.searchQuery);
+            }),prefixIcon: IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: () {
+              signLanguageModel.filterByDictionaryWord(signLanguageModel.searchQuery);
             },),)
 
           ],
@@ -37,56 +56,78 @@ class DictionaryScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
 
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-                child: ListView.separated(
-              scrollDirection: Axis.vertical,
+      body: FutureBuilder(
+          future: signLanguageService.getSignLanguages(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.none) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Error fetching data'));
+        }else{
+          // List<SignLanguage> signLanguages = signLanguageModel.signLanguages;
+          List<SignLanguage> signLanguages = signLanguageModel.filteredSignLanguages;
+          if (signLanguages.isEmpty) {
+            return Center(child: Text('No matching results'));
+          }
+          return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Expanded(
+                  child: ListView.separated(
+                      scrollDirection: Axis.vertical,
 
-                itemBuilder: (BuildContext context, int index){
-                  final dd = dictonary[index];
-                  return InkWell(
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                            child: DictionaryDetails(dm: dd),
-                            type: PageTransitionType.leftToRight,
-                          ));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        children: [
-                          Text('${'${index+1}'.toString()}.',style: GoogleFonts.poppins(color: Colors.white, fontSize: 12)),
-                          Text(dd.signLanguage, style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),),
-                        ],
-                      ),
-                    ),
-                  );
-            }, separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  color: Colors.white,
-                );
-            }, itemCount: dictonary.length))
-          ],
-        ),
+                      itemBuilder: (BuildContext context, int index) {
+                        // SignLanguage signLanguage = signLanguages[index];
+                        SignLanguage signLanguage = signLanguages[index];
+
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                  child: DictionaryDetails(signLanguage: signLanguage,),
+                                  type: PageTransitionType.leftToRight,
+                                ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              children: [
+                                Text('${'${index + 1}'.toString()}.',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white, fontSize: 12)),
+                                SizedBox(width: 20,),
+                                Text("Sign Language: ${signLanguage.signLanguage}",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white, fontSize: 12),),
+                              ],
+                            ),
+                          ),
+                        );
+                      }, separatorBuilder: (BuildContext context, int index) {
+                    return const Divider(
+                      color: Colors.white,
+                    );
+                  }, itemCount: signLanguages.length))
+            ],
+          ),
+        );
+      }}
       ),
     );
   }
 }
 
 class SearchContainer extends StatelessWidget {
-  const SearchContainer({Key? key}) : super(key: key);
+  final void Function()? onTap;
+
+  const SearchContainer({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-
-      },
+      onTap: onTap,
       splashColor: Colors.grey,
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),

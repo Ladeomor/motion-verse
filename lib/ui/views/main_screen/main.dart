@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:montion_verse/ui/views/dictionary_screen/dictionary.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/home_view.dart';
 import 'package:montion_verse/ui/views/welcome_screen/welcome.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
                   _currentIndex = index;
                 });
               },
-              children: const [
+              children:[
                 WelcomeScreen(),
                 Camera(),
                 DictionaryScreen(),
