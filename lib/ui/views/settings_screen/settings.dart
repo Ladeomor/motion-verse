@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
 import 'package:montion_verse/view_models/provider/font_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final themePref = Provider.of<ThemeProvider>(context);
+
     return Consumer(
         builder: (context, FontControlProvider fontProvider, child) {
          return Scaffold(
@@ -22,7 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
              centerTitle: true,
              title: Text(
                  'Settings', style: GoogleFonts.poppins(
-                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold
+                 fontSize: 20, color: themePref.isDarkMode?Colors.white:Colors.black, fontWeight: FontWeight.bold
              )
              ),
              backgroundColor: Colors.transparent,
@@ -30,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
              automaticallyImplyLeading: true,
 
            ),
-           backgroundColor: Colors.black,
+           backgroundColor: themePref.isDarkMode?Colors.black:Colors.white,
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(
@@ -38,7 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Divider(color: Colors.white,),
+                    Divider(color: themePref.isDarkMode?Colors.white:Colors.black,),
 
 
                     ListTile(
@@ -46,17 +49,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                       title:Text(
                         "Dictionary Font size adjustment",
-                        style: GoogleFonts.poppins(color: Colors.white),
+                        style: GoogleFonts.poppins(color: themePref.isDarkMode?Colors.white:Colors.black),
                       ),
                       trailing:IconButton(
                         icon: Icon(Icons.font_download),
-                        color: Colors.white
+                        color: themePref.isDarkMode?Colors.white:Colors.black
                         , onPressed: () {},
                       ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
+                          color: themePref.isDarkMode?Colors.grey.shade100:Colors.black54,
                           borderRadius: BorderRadius.circular(9),
                           boxShadow: const [BoxShadow(blurRadius: 1)]),
                       child: Padding(
@@ -68,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               children: [
                                 Text("Font size (px)",
                                     style: GoogleFonts.poppins(
-                                        color: Colors.black)),
+                                        color: themePref.isDarkMode?Colors.black:Colors.white)),
                               ],
                             ),
                             Column(
@@ -76,18 +79,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     Text(
                                       "A",
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,
+                                      color: themePref.isDarkMode?Colors.black:Colors.white),
                                     ),
                                     Text(
                                       "A",
                                       style: TextStyle(
                                           fontSize: 36,
-                                          fontWeight: FontWeight.w700),
+                                          fontWeight: FontWeight.w700,color: themePref.isDarkMode?Colors.black:Colors.white),
                                     ),
                                   ],
                                 ),
@@ -97,8 +101,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       child: Slider(
                                           min: 0,
                                           max: 100.0,
-                                          activeColor: Colors.black,
-                                          inactiveColor: const Color(0xFFD0D3D5),
+                                          activeColor: themePref.isDarkMode?Colors.black:Colors.white,
+                                          inactiveColor: themePref.isDarkMode?Color(0xFFD0D3D5):Colors.black54,
                                           value: fontProvider.currFontSize
                                               .toDouble(),
                                           onChanged: (double value) {
@@ -109,7 +113,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       fontProvider.currFontSize
                                           .round()
                                           .toString(),
-                                      style: GoogleFonts.poppins(),
+                                      style: GoogleFonts.poppins(color: themePref.isDarkMode?Colors.black:Colors.white),
+
                                     ),
                                   ],
                                 ),
@@ -119,7 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                     ),
-                    Divider(color: Colors.white,),
+                    Divider(color: themePref.isDarkMode?Colors.white:Colors.black,),
 
                     ListTile(
                       dense: true,
@@ -132,14 +137,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       // },
                       title: Text(
                         "Help & support",
-                        style: GoogleFonts.poppins(color: Colors.white),
+                        style: GoogleFonts.poppins(color: themePref.isDarkMode?Colors.white:Colors.black),
                       ),
-                      trailing: const Icon(
+                      trailing:  Icon(
                         Icons.arrow_forward_ios,
-                        color: Colors.white,
+                        color: themePref.isDarkMode?Colors.white:Colors.black,
                       ),
                     ),
-                    Divider(color: Colors.white,),
+                    Divider(color: themePref.isDarkMode?Colors.white:Colors.black,),
                   ],
                 ),
               ),

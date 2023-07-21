@@ -4,6 +4,8 @@ import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/home_view.dart';
 import 'package:montion_verse/ui/views/welcome_screen/welcome.dart';
+import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
+import 'package:provider/provider.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -32,39 +34,43 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-          return Scaffold(
-            body: PageView(
-              reverse: true,
-              controller: pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              children:[
-                WelcomeScreen(),
-                Camera(),
-                DictionaryScreen(),
-                
-              ],
-            ),
-            bottomNavigationBar:  BottomNavigationBar(
+          return Consumer(
+              builder: (context, ThemeProvider themeProvider, child) {
+                return Scaffold(
+                  body: PageView(
+                    reverse: true,
+                    controller: pageController,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    children: [
+                      WelcomeScreen(),
+                      Camera(),
+                      DictionaryScreen(),
 
-              unselectedItemColor: Colors.white70,
-              elevation: 0,
-              selectedItemColor: Colors.white,
-              selectedIconTheme: const IconThemeData(size: 30),
-              currentIndex: _currentIndex,
-              items: _bottomNavigationBarItems,
-              backgroundColor: Colors.black,
-              type: BottomNavigationBarType.fixed,
-              onTap: (index) {
-                // _pageController.jumpTo(index.toDouble());
-                pageController.animateToPage(index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOutSine);
-              },
-            ),
+                    ],
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+
+                    unselectedItemColor: themeProvider.isDarkMode?Colors.white70:Colors.black54,
+                    elevation: 0,
+                    selectedItemColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                    selectedIconTheme: const IconThemeData(size: 30),
+                    currentIndex: _currentIndex,
+                    items: _bottomNavigationBarItems,
+                    backgroundColor: themeProvider.isDarkMode?Colors.black:Colors.white,
+                    type: BottomNavigationBarType.fixed,
+                    onTap: (index) {
+                      // _pageController.jumpTo(index.toDouble());
+                      pageController.animateToPage(index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOutSine);
+                    },
+                  ),
+                );
+              }
           );
   }
 }

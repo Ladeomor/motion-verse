@@ -5,6 +5,7 @@ import 'package:montion_verse/models/dictionary_provider.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/live_camera.dart';
 import 'package:montion_verse/ui/views/splash_screen/splash_screen.dart';
+import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
 import 'package:montion_verse/view_models/provider/font_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,7 @@ Future<void> main() async{
       providers: [
 
         ChangeNotifierProvider(create: (_) => FontControlProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => SignLanguageModel()),
 
 
