@@ -38,23 +38,21 @@ dependencies:
   google_fonts:
   carousel_slider:
   page_transition: ^2.0.9
-  camera: ^0.10.4
+  camera:
   provider:
   shared_preferences:
-  tflite_flutter:
-  flutter_tflite: ^1.0.1
-  flutter_bloc: ^7.2.0
-  equatable:
   path_provider:
-  exif:
-  flutter_exif_rotation:
   image:
   fluttertoast:
   permission_handler:
-  tflite_flutter_helper_plus: ^0.0.2
   firebase_core: ^2.4.1
   cloud_firestore: ^4.3.1
   firebase_storage: ^11.0.10
+  image_picker: ^0.8.6
+  collection: ^1.16.0
+  flutter_tflite:
+  tflite_flutter: ^0.9.0
+
 
 dev_dependencies:
   flutter_test:
@@ -85,11 +83,8 @@ flutter:
     - assets/images/carousel_image_two.jpg
     - assets/images/carousel_image_three.jpg
     - assets/images/
-    - assets/labelmap.txt
-    - assets/detect.tflite
-    - assets/labels.txt
-    - assets/model_unquant.tflite
-    - assets/ssd_mobilenet.tflite
+    - assets/model.tflite
+    - assets/label_new.txt
 
 
 

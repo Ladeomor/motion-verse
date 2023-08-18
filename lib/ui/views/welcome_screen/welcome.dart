@@ -1,10 +1,10 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:montion_verse/ui/res/components/carousel_slide.dart';
 import 'package:montion_verse/ui/res/welcome_container.dart';
 import 'package:montion_verse/ui/views/dictionary_screen/dictionary.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
-import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
 import 'package:montion_verse/ui/views/settings_screen/settings.dart';
 import 'package:montion_verse/ui/views/translate_information/translate_info.dart';
 import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
@@ -12,7 +12,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  final CameraDescription? camera;
+
+  const WelcomeScreen({Key? key, required this.camera}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,7 @@ class WelcomeScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                            'Start Translating', style: GoogleFonts.poppins(
+                            'What Motion-verse does', style: GoogleFonts.poppins(
                           fontSize: 15,
                           color: themeProvider.isDarkMode?Colors.white:Colors.black,
                           fontWeight: FontWeight.bold,
@@ -101,14 +103,14 @@ class WelcomeScreen extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           children: [
                             GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        child: const Camera(),
-                                        type: PageTransitionType.leftToRight,
-                                      ));
-                                },
+                                // onTap: () {
+                                //   Navigator.push(
+                                //       context,
+                                //       PageTransition(
+                                //         child: Camera(camera: camera,),
+                                //         type: PageTransitionType.leftToRight,
+                                //       ));
+                                // },
                                 child: TranslateBox(
                                     color: themeProvider.isDarkMode?Colors.grey.withOpacity(.17):Colors.grey.shade100,
                                     icon: Icons.camera_alt,

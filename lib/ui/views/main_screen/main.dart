@@ -1,19 +1,22 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:montion_verse/ui/views/dictionary_screen/dictionary.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
-import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
-import 'package:montion_verse/ui/views/front_camera_screen/home_view.dart';
 import 'package:montion_verse/ui/views/welcome_screen/welcome.dart';
 import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final CameraDescription? camera;
+
+  const MainScreen({Key? key, @required this.camera,}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
+
+
   int _currentIndex = 0;
   PageController pageController = PageController(initialPage: 0);
   List<String> name = ['Menu', 'Camera', 'Dictionary'];
@@ -46,8 +49,8 @@ class _MainScreenState extends State<MainScreen> {
                       });
                     },
                     children: [
-                      WelcomeScreen(),
-                      Camera(),
+                      WelcomeScreen(camera: widget.camera,),
+                      Camera(camera: widget.camera,),
                       DictionaryScreen(),
 
                     ],

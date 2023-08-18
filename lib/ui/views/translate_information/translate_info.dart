@@ -14,18 +14,18 @@ class TranslateBox extends StatelessWidget {
     return Consumer(
         builder: (context, ThemeProvider themeProvider, child) {
           return Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
 
             height: 150,
             width: 180,
             decoration: BoxDecoration(
               boxShadow: [
-                themeProvider.isDarkMode?BoxShadow(
+                themeProvider.isDarkMode?const BoxShadow(
 
                   // offset: Offset(0, 2),
                   // blurRadius: 5,
                   // spreadRadius: 7,
-                ):BoxShadow(
+                ):const BoxShadow(
 
                   offset: Offset(0, 1),
                   // blurRadius: 2,
@@ -44,16 +44,16 @@ class TranslateBox extends StatelessWidget {
                   color: themeProvider.isDarkMode?Colors.white:Colors.black,
                   fontWeight: FontWeight.bold,
                 )),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Row(
                   children: [
                     CircleAvatar(
+                      backgroundColor: themeProvider.isDarkMode?Colors.white70:Colors.black54,
+                      foregroundColor: themeProvider.isDarkMode?Colors.black:Colors.white,
                       child: IconButton(icon: Icon(icon), onPressed: () {
 
-                      },),
-                      backgroundColor: themeProvider.isDarkMode?Colors.white70:Colors.black54,
-                      foregroundColor: themeProvider.isDarkMode?Colors.black:Colors.white,),
-                    Spacer(),
+                      },),),
+                    const Spacer(),
                     Image.asset(image, width: 100, height: 80)
 
                   ],

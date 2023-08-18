@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:montion_verse/data/dictionary_data.dart';
 import 'package:montion_verse/models/dictionary_model.dart';
 import 'package:montion_verse/models/dictionary_provider.dart';
-import 'package:montion_verse/services.dart';
+import 'package:montion_verse/services/firebase_service.dart';
 import 'package:montion_verse/ui/res/components/app_elevated_button.dart';
 import 'package:montion_verse/ui/res/components/app_textffield.dart';
 import 'package:montion_verse/ui/views/dictionary_screen/dictionary_details.dart';

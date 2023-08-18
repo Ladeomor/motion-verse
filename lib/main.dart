@@ -2,8 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:montion_verse/models/dictionary_provider.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/camera.dart';
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
-import 'package:montion_verse/ui/views/front_camera_screen/live_camera.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/widgets/home.dart';
 import 'package:montion_verse/ui/views/splash_screen/splash_screen.dart';
 import 'package:montion_verse/view_models/provider/dark_theme_provider.dart';
 import 'package:montion_verse/view_models/provider/font_provider.dart';
@@ -41,7 +42,6 @@ Future<void> main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
       ),
-      home: SplashScreen(),
+      home: SplashScreen(camera: cameras!.first,),
     );
   }
 }

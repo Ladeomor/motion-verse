@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:montion_verse/ui/views/settings_screen/shared_data.dart';
+import 'package:montion_verse/shared_data/font_pref.dart';
 
 class FontControlProvider extends ChangeNotifier{
   double _fontSize = 15;

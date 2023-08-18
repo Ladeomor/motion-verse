@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'package:montion_verse/ui/views/front_camera_screen/front_camera.dart';
+import 'package:montion_verse/ui/views/front_camera_screen/widgets/home.dart';
 
 class Camera extends StatefulWidget {
-  const Camera({Key? key}) : super(key: key);
+  final CameraDescription? camera;
+
+  const Camera({Key? key, @required this.camera,}) : super(key: key);
 
   @override
   _CameraState createState() => _CameraState();
@@ -36,7 +40,7 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return FrontCamera();
+    return Home(camera: widget.camera,);
   }
 
 
